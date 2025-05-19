@@ -1,0 +1,36 @@
+version = 1
+revision = 2
+requires-python = ">=3.10.16"
+
+[[package]]
+name = "as-lark"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "colorama" },
+    { name = "lark" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "colorama", specifier = ">=0.4.6" },
+    { name = "lark", specifier = ">=1.2.2" },
+]
+
+[[package]]
+name = "colorama"
+version = "0.4.6"
+source = { registry = "https://nexus.xes-mad.com/repository/upstream-pypi/simple" }
+sdist = { url = "https://nexus.xes-mad.com/repository/upstream-pypi/packages/colorama/0.4.6/colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44" }
+wheels = [
+    { url = "https://nexus.xes-mad.com/repository/upstream-pypi/packages/colorama/0.4.6/colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6" },
+]
+
+[[package]]
+name = "lark"
+version = "1.2.2"
+source = { registry = "https://nexus.xes-mad.com/repository/upstream-pypi/simple" }
+sdist = { url = "https://nexus.xes-mad.com/repository/upstream-pypi/packages/lark/1.2.2/lark-1.2.2.tar.gz", hash = "sha256:ca807d0162cd16cef15a8feecb862d7319e7a09bdb13aef927968e45040fed80" }
+wheels = [
+    { url = "https://nexus.xes-mad.com/repository/upstream-pypi/packages/lark/1.2.2/lark-1.2.2-py3-none-any.whl", hash = "sha256:c2276486b02f0f1b90be155f2c8ba4a8e194d42775786db622faccd652d8e80c" },
+]

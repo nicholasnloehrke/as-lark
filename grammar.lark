@@ -1,0 +1,76 @@
+%import common.CNAME
+%import common.WS_INLINE
+%import common.NEWLINE
+%import common.SH_COMMENT
+%import common.C_COMMENT
+%import common.CPP_COMMENT
+
+%ignore WS_INLINE
+%ignore SH_COMMENT
+%ignore C_COMMENT
+%ignore CPP_COMMENT
+
+
+# program: (NEWLINE | section)*
+program: NEWLINE* code_section data_section?
+       | NEWLINE* data_section? code_section
+
+section: data_section | code_section
+
+data_section: ".data" NEWLINE data_decl+
+code_section: ".code" NEWLINE statement+
+
+data_decl: label ":" ".word" "," immediate NEWLINE+
+
+statement: label ":" NEWLINE instruction NEWLINE+
+         | label ":" instruction NEWLINE+
+         | instruction NEWLINE+
+
+label: CNAME
+
+instruction: r_type
+           | i_type
+           | j_type
+           | p_type
+
+r_type: "add" REGISTER "," REGISTER "," REGISTER -> add
+      | "sub" REGISTER "," REGISTER "," REGISTER -> sub
+      | "slt" REGISTER "," REGISTER "," REGISTER -> slt
+
+i_type: "li"   REGISTER "," value -> li
+      | "lw"   REGISTER "," value -> lw
+      | "sw"   REGISTER "," value -> sw
+      | "beq"  REGISTER "," value -> beq
+      | "bne"  REGISTER "," value -> bne
+      | "push" REGISTER           -> push
+      | "pop"  REGISTER           -> pop
+
+j_type: "j"   value -> j
+      | "jal" value -> jal
+      | "jr"        -> jr
+
+p_type: "nop" -> nop
+
+REGISTER: "D0"
+        | "D1"
+        | "D2"
+        | "D3"
+
+value: identifier | immediate
+
+identifier: CNAME
+
+immediate: NUMBER
+
+NUMBER: "-"? DECIMAL_NUMBER
+      | "-"? OCTAL_NUMBER
+      | "-"? HEX_NUMBER
+
+DECIMAL_NUMBER: DECIMAL_DIGIT+
+OCTAL_NUMBER: "0o" OCTAL_DIGIT+
+HEX_NUMBER: "0x" HEX_DIGIT+
+
+OCTAL_DIGIT: "0".."7"
+DECIMAL_DIGIT: "0".."9"
+HEX_DIGIT: "a".."f"|"A".."F"|DECIMAL_DIGIT
+
